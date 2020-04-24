@@ -14,38 +14,7 @@ class MySQL_database:
         database = 'covid'
     )
     curs = conn.cursor()
-
-    #Create the database and a table inside it
-    def db_create(self):
-        '''Function creating the MySQL database and corresponding tables'''
-        try:
-            self.curs.execute('CREATE DATABASE covid')
-        except:
-            print('The database with the specified name already exists')
-
-        try:
-            self.curs.execute('''CREATE TABLE casualties
-                            (tested int not null, sick int not null, 
-                            cured int not null, dead int not null, 
-                            date unique not null);''')
-            print('The specified DB and a table have been created')
-        except:
-            print('Table with overall statistics ---- ALREADY CREATED')
-        
-        try:
-            self.curs.execute('''CREATE TABLE casualties_reg 
-                (`date` date primary key not null, Вінницька int not null, Волинська int not null, 
-                Дніпропетровська int not null, Донецька int not null, Житомирська int not null, 
-                Закарпатська int not null, Запорізька int not null, Івано_Франківська int not null, 
-                Кіровоградська int not null, Київ int not null, Київська int not null, 
-                Львівська int not null, Луганська int not null, Миколаївська int not null, 
-                Одеська int not null, Полтавська int not null, Рівненська int not null, 
-                Сумська int not null, Тернопільська int not null, Харківська int not null, 
-                Херсонська int not null, Хмельницька int not null, Чернівецька int not null, 
-                Черкаська int not null, Чернігівська int not null);''' )
-        except:
-            print('Table with regional statistics ---- ALREADY CREATED')
-
+    
 
 class Visualization:
 
@@ -136,7 +105,6 @@ class Visualization:
 
 # Add new entries to the SQL database
 sql_db = MySQL_database()
-sql_db.db_create()
 
 # Show graph with subplots
 viz = Visualization()
