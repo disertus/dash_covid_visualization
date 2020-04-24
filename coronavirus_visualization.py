@@ -5,36 +5,18 @@ import plotly.graph_objs as go
 import mysql.connector
 import pandas as pd
 
-class MySQL_database:
-    # Establish connection with the database    
-    conn = mysql.connector.connect(
-        user = 'root',
-        password = '3a8n4m9qhhltp1r5',
-        host = '35.246.212.65',
-        database = 'covid'
-    )
-    curs = conn.cursor()
-    
 
 class Visualization:
-
-    # 'r before the path is specified in order to avoid the unicode decoding error
-    # sql_connect = sqlite3.connect(r'C:\Users\Roman\Google Диск\Python-Learning\coronavirus-research\covid19.db') 
-    
-    # Referring directly to a connection established inside the 'SQLite_database' class
-    sql_connect = MySQL_database.conn
     
     # Transfering data from the SQLite database into pandas dataframe
-    dataframe = pd.read_sql_query('SELECT * FROM casualties;', sql_connect)
-    dataframe = dataframe.sort_values(by=['date'])
-    dataframe_reg = pd.read_sql_query('SELECT * FROM casualties_reg;', sql_connect)
-    dataframe_reg = dataframe_reg.sort_values(by=['date'])    
+    dataframe_reg = pd.read_csv('casualties.csv')
+    dataframe_reg = dataframe_reg.sort_values(by=['date']) 
 
     # Daily stats for each category
-    sick_daily = (dataframe.sick.iloc[-1] - dataframe.sick.iloc[-2], dataframe.sick.iloc[-2] - dataframe.sick.iloc[-3])
-    cured_daily = dataframe.cured.iloc[-1] - dataframe.cured.iloc[-2]
-    dead_daily = dataframe.dead.iloc[-1] - dataframe.dead.iloc[-2]
-    tested_daily = dataframe.tested.iloc[-1] - dataframe.tested.iloc[-2]
+    sick_daily = (dataframe_reg.sick.iloc[-1] - dataframe_reg.sick.iloc[-2], dataframe_reg.sick.iloc[-2] - dataframe_reg.sick.iloc[-3])
+    cured_daily = dataframe_reg.cured.iloc[-1] - dataframe_reg.cured.iloc[-2]
+    dead_daily = dataframe_reg.dead.iloc[-1] - dataframe_reg.dead.iloc[-2]
+    tested_daily = dataframe_reg.tested.iloc[-1] - dataframe_reg.tested.iloc[-2]
 
     # print(((dataframe_reg.iloc[-1][1:] - dataframe_reg.iloc[-2][1:]) / dataframe_reg.iloc[-1][1:])*100)
 
@@ -102,10 +84,6 @@ class Visualization:
         figure_sick_reg = go.Figure(data = data, layout = self.layout)
         return figure_sick_reg
 
-
-# Add new entries to the SQL database
-sql_db = MySQL_database()
-
 # Show graph with subplots
 viz = Visualization()
 
@@ -122,23 +100,8 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1(myheading),
     dcc.Graph(
-        id='covid19_id',
-        figure=viz.sick_people(viz.dataframe_reg.keys()[1:], viz.dataframe_reg.iloc[-1][1:], 'Aggrnyl')
-    ),
-    html.Br(),
-    dcc.Graph(
-        id='covid19_lethality',
-        figure=viz.letality_rate()
-    ),
-    html.Br(),
-    dcc.Graph(
-        id='covid19_cured_vs_dead',
-        figure=viz.cured_vs_dead()
-    ),
-    html.Br(),
-    dcc.Graph(
         id='covid19_sick_overall',
-        figure=viz.sick_people(viz.dataframe.date, viz.dataframe.sick, 'Aggrnyl')
+        figure=viz.sick_people(viz.dataframe_reg.date, viz.dataframe_reg.sick, 'Aggrnyl')
     )
     ]
 )
