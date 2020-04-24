@@ -15,13 +15,13 @@ from plotly.subplots import make_subplots
 # https://covid19.com.ua/ - daily updated data by the Ministry of Healthcare of Ukraine 
 # https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-
 
-# Opens a URL of the webpage, which is going to be parsed
-openurl = urllib.request.urlopen("https://covid19.com.ua/").read()
-soup = BeautifulSoup(openurl, 'lxml')
+# # Opens a URL of the webpage, which is going to be parsed
+# openurl = urllib.request.urlopen("https://covid19.com.ua/").read()
+# soup = BeautifulSoup(openurl, 'lxml')
 
-# Opens a URL of the regional statistics webpage
-openurl_reg = urllib.request.urlopen("https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-").read()
-soup_reg = BeautifulSoup(openurl_reg, 'lxml')
+# # Opens a URL of the regional statistics webpage
+# openurl_reg = urllib.request.urlopen("https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-").read()
+# soup_reg = BeautifulSoup(openurl_reg, 'lxml')
 
 
 class People:
@@ -254,16 +254,16 @@ class Visualization:
 
 # Print out the resutls to check them in terminal
 casualties = People()
-casualties.parcing_reg()
-casualties.print_out_results()
+# casualties.parcing_reg()
+# casualties.print_out_results()
 
 
 # Add new entries to the SQL database
 sql_db = MySQL_database()
-sql_db.db_create()
-sql_db.db_update()
-sql_db.conn.commit()
-sql_db.conn.close()
+# sql_db.db_create()
+# sql_db.db_update()
+# sql_db.conn.commit()
+# sql_db.conn.close()
 
 # Show graph with subplots
 viz = Visualization()
