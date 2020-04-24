@@ -1,98 +1,10 @@
-import datetime
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly.graph_objs as go
 import mysql.connector
-import re
-import urllib.request
-
 import pandas as pd
-import plotly.graph_objects as go
-from bs4 import BeautifulSoup
-from bs4 import SoupStrainer
-from plotly.subplots import make_subplots
 
-# https://www.worldometers.info/coronavirus/ - table with cases worldwide
-# https://coronavirus.jhu.edu/map.html - visualization by John Hopkins
-
-# https://covid19.com.ua/ - daily updated data by the Ministry of Healthcare of Ukraine 
-# https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-
-
-# # Opens a URL of the webpage, which is going to be parsed
-# openurl = urllib.request.urlopen("https://covid19.com.ua/").read()
-# soup = BeautifulSoup(openurl, 'lxml')
-
-# # Opens a URL of the regional statistics webpage
-# openurl_reg = urllib.request.urlopen("https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-").read()
-# soup_reg = BeautifulSoup(openurl_reg, 'lxml')
-
-
-class People:
-
-    # Parce the Ministry of Healthcare website for stats regarding COVID-19
-    def parcing():
-        # Extracts the numeric values for cases in the form of strings inside a list
-        parced_tags = soup.find_all('div', {'class' : 'field-value'})
-        cases_list = []
-        for i in parced_tags:
-            value = i.string
-            if value == None:
-                continue
-            value = re.findall(r"\d+", value)   # Filters out all non-digit characters in the 'value' string
-            value = [''.join(value)]            # Joins multiple values inside the list object, in 
-                                                # case '2000' is written as '2' '000'
-            cases_list.append(str(value[0]))
-        return cases_list
-
-
-    def parcing_reg(self):
-        cases_dict = {}
-        parced_tags_reg_ul = soup_reg.find_all('ul')[2].text
-        parced_tags_reg_p = soup_reg.find_all('div', {'class' : 'editor'})[0]
-        parced_tags_reg_p = re.sub(r'<br/>', '', parced_tags_reg_p.find_all('p')[2].text)
-
-        def parcing(parced_tags_reg):
-            values = re.split(r";", parced_tags_reg)
-            for i in values:
-                reg_clean = re.split('—', (re.sub(r'\n', '', i)))
-                reg_name = re.sub(r'область', '', reg_clean[0]).strip()
-                reg_stats = re.findall(r'\d+', i)[0]
-                cases_dict.update({reg_name : int(reg_stats)})
-            cases_dict['Івано_Франківська'] = cases_dict.pop('Івано-Франківська')
-            cases_dict['Київ'] = cases_dict.pop('м. Київ')
-        try:
-            parcing(parced_tags_reg_p)
-        except:
-            parcing(parced_tags_reg_ul)
-
-        return cases_dict
-
-    #Values representing the stats for each category - tested, sick, cured and dead
-    tested = parcing()[0]
-    sick = parcing()[1]
-    cured = parcing()[2]
-    dead = parcing()[3]
-
-
-    # Print out the result of the parcing - to check if values correspond to those on the website
-    def print_out_results(self):
-        day = datetime.date.today()
-        print ("\nСтатистика захворюваності станом на {}:".format(day))
-        print ("""
-            Протестовано: {}
-
-            Хворих:    \t{}
-            
-            Одужало:   \t{}
-            
-            Померло:   \t{} 
-        """.format(self.tested,
-                self.sick,
-                self.cured,
-                self.dead))
-        
-        for k, v in self.parcing_reg().items():
-            print ('''{}:   {}'''.format(k, v))
-
-
-# Add the collected values to the SQLite database for storage and collection of stats
 class MySQL_database:
     # Establish connection with the database    
     conn = mysql.connector.connect(
@@ -134,36 +46,6 @@ class MySQL_database:
         except:
             print('Table with regional statistics ---- ALREADY CREATED')
 
-    # Insert the latest data entry into the database
-    def db_update(self):
-        '''Function adding new entries to the MySQL database tables "casualties" and "casualties_reg"'''
-        day = datetime.date.today()
-        try:
-            self.curs.execute('''INSERT INTO casualties VALUES
-                (%s, %s, %s, %s, %s);''', (casualties.tested, 
-                casualties.sick, 
-                casualties.cured, 
-                casualties.dead, 
-                day))
-        except:
-            print("Overall statistics -------------- ALREADY UPDATED")
-
-        dic = casualties.parcing_reg()
-        try:
-            self.curs.execute('''INSERT INTO casualties_reg (date, Вінницька, Волинська, Дніпропетровська, 
-            Донецька, Житомирська, Закарпатська, Запорізька, Івано_Франківська, Кіровоградська, Київ, Київська, 
-            Львівська, Луганська, Миколаївська, Одеська, Полтавська, Рівненська, 
-            Сумська, Тернопільська, Харківська, Херсонська, Хмельницька, Чернівецька, 
-            Черкаська, Чернігівська) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                %s, %s, %s, %s, %s, %s, %s, %s);''', (day, dic['Вінницька'], dic['Волинська'], dic['Дніпропетровська'], dic['Донецька'], 
-            dic['Житомирська'], dic['Закарпатська'], dic['Запорізька'], dic['Івано_Франківська'], dic['Кіровоградська'], dic['Київ'], 
-            dic['Київська'], dic['Львівська'], dic['Луганська'], dic['Миколаївська'], dic['Одеська'], dic['Полтавська'], dic['Рівненська'], 
-            dic['Сумська'], dic['Тернопільська'], dic['Харківська'], dic['Херсонська'], dic['Хмельницька'], dic['Чернівецька'], 
-            dic['Черкаська'], dic['Чернігівська']))
-        except:
-            print('Regional statistics ------------- ALREADY UPDATED')
-
-
 
 class Visualization:
 
@@ -185,7 +67,7 @@ class Visualization:
     dead_daily = dataframe.dead.iloc[-1] - dataframe.dead.iloc[-2]
     tested_daily = dataframe.tested.iloc[-1] - dataframe.tested.iloc[-2]
 
-    print(((dataframe_reg.iloc[-1][1:] - dataframe_reg.iloc[-2][1:]) / dataframe_reg.iloc[-1][1:])*100)
+    # print(((dataframe_reg.iloc[-1][1:] - dataframe_reg.iloc[-2][1:]) / dataframe_reg.iloc[-1][1:])*100)
 
     #Establishing a layout for the charts
     layout = dict({
@@ -219,7 +101,7 @@ class Visualization:
             name = 'Dead'
         )
         figure = go.Figure(data = (data_cured, data_dead), layout = self.layout)
-        figure.show()
+        return figure
 
 
     def letality_rate(self):
@@ -234,7 +116,7 @@ class Visualization:
             name = 'Cured'
         )
         figure = go.Figure(data = data_letality, layout = self.layout)
-        figure.show()
+        return figure
 
 
     def sick_people(self, axis_x, axis_y, color_scale):
@@ -249,25 +131,49 @@ class Visualization:
                     'colorscale': color_scale}
         )
         figure_sick_reg = go.Figure(data = data, layout = self.layout)
-        figure_sick_reg.show()
-
-
-# Print out the resutls to check them in terminal
-casualties = People()
-# casualties.parcing_reg()
-# casualties.print_out_results()
+        return figure_sick_reg
 
 
 # Add new entries to the SQL database
 sql_db = MySQL_database()
-# sql_db.db_create()
-# sql_db.db_update()
-# sql_db.conn.commit()
-# sql_db.conn.close()
+sql_db.db_create()
 
 # Show graph with subplots
 viz = Visualization()
-viz.sick_people(viz.dataframe.date, viz.dataframe.sick, 'Aggrnyl')
-viz.sick_people(viz.dataframe_reg.keys()[1:], viz.dataframe_reg.iloc[-1][1:], 'Aggrnyl')
-viz.cured_vs_dead()
-viz.letality_rate()
+
+tabtitle = 'Covid19 in Ukraine'
+myheading = 'Covid 19 in Ukraine - stats'
+
+########### Initiate the app
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
+app.title=tabtitle
+
+########### Set up the layout
+app.layout = html.Div(children=[
+    html.H1(myheading),
+    dcc.Graph(
+        id='covid19_id',
+        figure=viz.sick_people(viz.dataframe_reg.keys()[1:], viz.dataframe_reg.iloc[-1][1:], 'Aggrnyl')
+    ),
+    html.Br(),
+    dcc.Graph(
+        id='covid19_lethality',
+        figure=viz.letality_rate()
+    ),
+    html.Br(),
+    dcc.Graph(
+        id='covid19_cured_vs_dead',
+        figure=viz.cured_vs_dead()
+    ),
+    html.Br(),
+    dcc.Graph(
+        id='covid19_sick_overall',
+        figure=viz.sick_people(viz.dataframe.date, viz.dataframe.sick, 'Aggrnyl')
+    )
+    ]
+)
+
+if __name__ == '__main__':
+    app.run_server()
