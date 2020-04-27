@@ -15,34 +15,12 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import datetime
-import mysql.connector
 import plotly.graph_objs as go
 import pandas as pd
 
-class MySQL_database:
-    # Establish connection with the database    
-    conn = mysql.connector.connect(
-        user = 'root',
-        password = '3a8n4m9qhhltp1r5',
-        host = '35.246.212.65',
-        database = 'covid'
-    )
-    curs = conn.cursor()
 
 class Visualization:
 
-    # 'r before the path is specified in order to avoid the unicode decoding error
-    # sql_connect = sqlite3.connect(r'C:\Users\Roman\Google Диск\Python-Learning\coronavirus-research\covid19.db') 
-    
-    # Referring directly to a connection established inside the 'SQLite_database' class
-    sql_connect = MySQL_database.conn
-    
-    # Transfering data from the SQLite database into pandas dataframe
-    dataframe = pd.read_sql_query('SELECT * FROM casualties;', sql_connect)
-    dataframe = dataframe.sort_values(by=['date'])
-    dataframe_reg = pd.read_sql_query('SELECT * FROM casualties_reg;', sql_connect)
-    dataframe_reg = dataframe_reg.sort_values(by=['date'])
-    
     # Transfering data from the SQLite database into pandas dataframe
     dataframe = pd.read_csv('casualties.csv')
     dataframe = dataframe.sort_values(by=['date'])
@@ -128,9 +106,7 @@ class Visualization:
         figure_sick_reg.update_layout({"title": {"text": "Number of Sick people (overall):"}})        
         return figure_sick_reg
 
-# Add new entries to the SQL database
-sql_db = MySQL_database()
-    
+
 # Show graph with subplots
 viz = Visualization()
 
