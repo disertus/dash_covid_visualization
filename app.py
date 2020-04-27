@@ -47,7 +47,8 @@ class Visualization:
             'xaxis':{'color':'#3EC283'},
             'yaxis':{'color':'white'},
             'hovermode':'x',
-            "showlegend" : False
+            "showlegend" : False,
+            'xaxis_showgrid': False
         })
         return layout
 
