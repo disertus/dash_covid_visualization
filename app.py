@@ -230,7 +230,7 @@ app.layout = html.Div(children=[
         html.H4('Charts are updated on daily basis, data is being collected from the following sources :'),
         html.A('\t\tCOVID-19 platform by the Cabinet of Ministers of Ukraine', href='https://covid19.com.ua/'),
         html.Br(),
-        html.A('\t\tMinistry of Healthcare - Official website', href='https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-'),
+        html.A('\t\tMinistry of Healthcare - Official website', href='https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-1'),
         html.Br(),
         html.Br()
                 ])
