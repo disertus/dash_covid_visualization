@@ -46,7 +46,8 @@ class Visualization:
             'plot_bgcolor' : '#312E2E',
             'xaxis':{'color':'#3EC283'},
             'yaxis':{'color':'white'},
-            'hovermode':'x'
+            'hovermode':'x',
+            "showlegend" : False
         })
         return layout
 
@@ -83,10 +84,19 @@ class Visualization:
             line = dict(
                 color = '#FF8700',
                 width = 3),
-            fill = 'tonexty',
-            name = 'Cured'
+            fill = 'tozeroy',
+            name = 'Fatality'
         )
-        figure = go.Figure(data = data_letality, layout = self.chart_layout())
+        data_recovery = go.Scatter(
+            x = self.dataframe.date,
+            y = (self.dataframe.cured/(self.dataframe.sick+self.dataframe.dead))*100,
+            line = dict(
+                color = '#057BF2',
+                width = 3),
+            fill = 'tonexty',
+            name = 'Recovery'
+        )
+        figure = go.Figure(data = (data_recovery, data_letality), layout = self.chart_layout())
         figure.update_layout({"title": {"text": "Fatality vs Recovery rate (%):"}})
         return figure
 
@@ -132,9 +142,9 @@ app.layout = html.Div(children=[
                             ]),
                     html.Div(className='three columns div-explainers',
                             children=[
-                                html.H2('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet')
+                                html.H2('Total: {} cases'.format(viz.dataframe.sick.iloc[-1])),
+                                html.H3('Today:  +{} cases'.format(viz.sick_daily[0])),
+                                html.H3('Yesterday:  +{} cases'.format(viz.sick_daily[1]))
                             ])
                 ]),
                         
@@ -150,9 +160,12 @@ app.layout = html.Div(children=[
                             ]),
                     html.Div(className='three columns div-explainers',
                             children=[
-                                html.H2('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet')
+                                html.H2('Cases by regions'),
+                                html.H3('Highest today:'),
+                                html.H3('Region +# cases'),
+                                html.Br(),
+                                html.H3('Lowest today:'),
+                                html.H3('Region +# cases')
                             ])
                     ]),
 
@@ -168,9 +181,13 @@ app.layout = html.Div(children=[
                             ]),
                     html.Div(className='three columns div-explainers',
                             children=[
-                                html.H2('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet')
+                                html.H2('Recovery'),
+                                html.H3('Recovered today: +{}'.format(viz.cured_daily[0])),
+                                html.H3('Recovered yesterday: +{}'.format(viz.cured_daily[1])),
+                                html.Br(),
+                                html.H2('Deaths'),
+                                html.H3('Died today: +{}'.format(viz.dead_daily[0])),
+                                html.H3('Died yesterday: +{}'.format(viz.dead_daily[1])),
                             ])
                     ]),
 
@@ -210,7 +227,7 @@ app.layout = html.Div(children=[
                 #     ]),
                 # ]),
         html.Br(),
-        html.H2('Charts are updated on daily basis, data is being collected from the following sources :'),
+        html.H4('Charts are updated on daily basis, data is being collected from the following sources :'),
         html.A('\t\tCOVID-19 platform by the Cabinet of Ministers of Ukraine', href='https://covid19.com.ua/'),
         html.Br(),
         html.A('\t\tMinistry of Healthcare - Official website', href='https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-'),
