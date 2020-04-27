@@ -128,7 +128,9 @@ class Visualization:
         figure_sick_reg.update_layout({"title": {"text": "Number of Sick people (overall):"}})        
         return figure_sick_reg
 
-
+# Add new entries to the SQL database
+sql_db = MySQL_database()
+    
 # Show graph with subplots
 viz = Visualization()
 
