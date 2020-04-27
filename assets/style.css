@@ -58,7 +58,8 @@
   .six.columns                    { width: 49.75%;          }
   .seven.columns                  { width: 56.6666666667%; }
   .eight.columns                  { width: 66.5%;          }
-  .nine.columns                   { width: 74.0%;          }
+  .nine.columns                   { width: 75.0%;
+                                    margin-left: 1%;          }
   .ten.columns                    { width: 82.6666666667%; }
   .eleven.columns                 { width: 91.5%; }
   .twelve.columns                 { width: 100%; margin-left: 0; }
@@ -125,10 +126,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: 0;
   font-weight: 300; }
-h1 { font-size: 2.8rem; line-height: 1.2;  letter-spacing: -.1rem; margin-bottom: 1.5rem; margin-top: 1.5rem; margin-left: 0.1%; margin-right: 0.5%; padding-top: 2rem; padding-bottom: 2rem; text-align: center; background-color: #312E2E; color: #cecece;}
-h2 { font-size: 2.4rem; line-height: 1.2;  letter-spacing: -.1rem; margin-bottom: 1.5rem; margin-top: 0rem; margin-left: 0.1%; margin-right: 0.5%; padding-top: 2rem; padding-bottom: 2rem; text-align: center; background-color: #312E2E; color: #cecece;}
+h1 { font-size: 2.8rem; line-height: 1.2;  letter-spacing: -.1rem; margin-bottom: 1.5rem; margin-top: 1.5rem; margin-left: 1%; margin-right: 1%; padding-top: 2rem; padding-bottom: 2rem; text-align: center; background-color: #312E2E; color: #cecece;}
+h2 { font-size: 2.4rem; line-height: 1.2;  letter-spacing: -.1rem; margin-bottom: 1.5rem; margin-top: 0rem; margin-left: 0.1%; margin-right: 0.5%; padding-top: 2rem; padding-bottom: 2rem; text-align: center; background-color: #312E2E; color: #d29c6d;}
 h3 { font-size: 2rem; line-height: 1.2;  letter-spacing: -.1rem; margin-bottom: 0rem; margin-top: 0rem; margin-left: 0.1%; margin-right: 0.5%; padding-top: 2rem; padding-bottom: 2rem; text-align: center; background-color: #312E2E; color: #cecece;}
-h4 { font-size: 2.6rem; line-height: 1.35; letter-spacing: -.08rem; margin-bottom: 1.2rem; margin-top: 1.2rem;}
+h4 { font-size: 2.4rem; line-height: 1.2;  letter-spacing: -.1rem; margin-bottom: 1.5rem; margin-top: 0rem; margin-left: 1%; margin-right: 1%; padding-top: 2rem; padding-bottom: 2rem; text-align: center; background-color: #312E2E; color: #cecece;}
 h5 { font-size: 2.2rem; line-height: 1.5;  letter-spacing: -.05rem; margin-bottom: 0.6rem; margin-top: 0.6rem;}
 h6 { font-size: 2.0rem; line-height: 1.6;  letter-spacing: 0; margin-bottom: 0.75rem; margin-top: 0.75rem;}
 
