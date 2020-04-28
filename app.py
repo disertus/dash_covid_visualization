@@ -76,7 +76,7 @@ class Visualization:
         '''Function visualizing the letality rate: dead/(sick + cured)*100'''
         data_letality = go.Scatter(
             x = self.dataframe.date,
-            y = (self.dataframe.dead/(self.dataframe.sick+self.dataframe.cured))*100,
+            y = (self.dataframe.dead/(self.dataframe.sick+self.dataframe.cured)).round(decimals=4)*100,
             line = dict(
                 color = '#FF8700',
                 width = 3),
@@ -85,7 +85,7 @@ class Visualization:
         )
         data_recovery = go.Scatter(
             x = self.dataframe.date,
-            y = (self.dataframe.cured/(self.dataframe.sick+self.dataframe.dead))*100,
+            y = (self.dataframe.cured/(self.dataframe.sick+self.dataframe.dead)).round(decimals=4)*100,
             line = dict(
                 color = '#057BF2',
                 width = 3),
