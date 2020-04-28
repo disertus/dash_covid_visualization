@@ -4,11 +4,6 @@
 from flask import Flask
 
 server = Flask(__name__)
-
-@server.route('/')
-def hello_world():
-    return 'Hello from Flask!'
-
 ### Application
 
 import dash
@@ -124,7 +119,7 @@ viz = Visualization()
 tabtitle = 'Covid19 in Ukraine: latest numbers'
 
 ########### Initiate the app
-app = dash.Dash(__name__, server = server, routes_pathname_prefix = '/dash/')
+app = dash.Dash(__name__, server = server)
 app.title=tabtitle
 
 ########### Set up the layout
