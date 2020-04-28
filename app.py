@@ -202,8 +202,8 @@ app.layout = html.Div(children=[
                     html.Div(className='three columns div-explainers',
                             children=[
                                 html.H2('Current ratio'),
-                                html.H3(f"Recovery: {(viz.dataframe.cured/(viz.dataframe.sick+viz.dataframe.dead)).round(decimals=3).iloc[-1]*100} %"),
-                                html.H3(f"Fatality: {(viz.dataframe.dead/(viz.dataframe.sick+viz.dataframe.cured)).round(decimals=3).iloc[-1]*100} %")
+                                html.H3("Recovery: {} %".format(viz.dataframe.cured/(viz.dataframe.sick+viz.dataframe.dead)).round(decimals=2).iloc[-1]*100),
+                                html.H3("Fatality: {} %".format(viz.dataframe.dead/(viz.dataframe.sick+viz.dataframe.cured)).round(decimals=2).iloc[-1]*100)
                             ])
                 ]),
 
