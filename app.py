@@ -4,6 +4,8 @@
 from flask import Flask
 
 server = Flask(__name__)
+
+
 ### Application
 
 import dash
@@ -178,12 +180,12 @@ app.layout = html.Div(children=[
                     html.Div(className='three columns div-explainers',
                             children=[
                                 html.H2('Recovery'),
-                                html.H3('Recovered today: +{}'.format(viz.cured_daily[0])),
-                                html.H3('Recovered yesterday: +{}'.format(viz.cured_daily[1])),
+                                html.H3(f'Recovered today: +{viz.cured_daily[0]}'),
+                                html.H3(f'Recovered yesterday: +{viz.cured_daily[1]}'),
                                 html.Br(),
                                 html.H2('Deaths'),
-                                html.H3('Died today: +{}'.format(viz.dead_daily[0])),
-                                html.H3('Died yesterday: +{}'.format(viz.dead_daily[1])),
+                                html.H3(f'Died today: +{viz.dead_daily[0]}'),
+                                html.H3(f'Died yesterday: +{viz.dead_daily[1]}'),
                             ])
                     ]),
 
@@ -199,9 +201,9 @@ app.layout = html.Div(children=[
                             ]),
                     html.Div(className='three columns div-explainers',
                             children=[
-                                html.H2('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet'),
-                                html.H3('Lorem ipsum dolor sit amet')
+                                html.H2('Current ratio'),
+                                html.H3(f"Recovery: {(viz.dataframe.cured/(viz.dataframe.sick+viz.dataframe.dead)).round(decimals=4).iloc[-1]*100} %"),
+                                html.H3(f"Fatality: {(viz.dataframe.dead/(viz.dataframe.sick+viz.dataframe.cured)).round(decimals=4).iloc[-1]*100} %")
                             ])
                 ]),
 
@@ -226,7 +228,7 @@ app.layout = html.Div(children=[
         html.H4('Charts are updated on daily basis, data is being collected from the following sources :'),
         html.A('\t\tCOVID-19 platform by the Cabinet of Ministers of Ukraine', href='https://covid19.com.ua/'),
         html.Br(),
-        html.A('\t\tMinistry of Healthcare - Official website', href='https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-1'),
+        html.A('\t\tMinistry of Healthcare - Official website', href='https://moz.gov.ua/article/news/operativna-informacija-pro-poshirennja-koronavirusnoi-infekcii-2019-ncov-'),
         html.Br(),
         html.Br()
                 ])
