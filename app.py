@@ -278,6 +278,9 @@ app.layout = html.Div(
                         html.H2(f"Total: {viz.dataframe.tested.iloc[-1]}"),
                         html.H3(f"Today:  +{viz.tested_daily[0]}"),
                         html.H3(f"Yesterday:  +{viz.tested_daily[1]}"),
+                        html.H3(
+                            f"Tested {(viz.dataframe.tested.iloc[-1]/41980000*100).round(decimals=2)} % out of 41,98 M"
+                        ),
                     ],
                 ),
             ],
