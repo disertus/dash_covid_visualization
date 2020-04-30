@@ -1,19 +1,15 @@
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask
-
-server = Flask(__name__)
-
-
-### Application
+import datetime
 
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import datetime
-import plotly.graph_objs as go
 import pandas as pd
+import plotly.graph_objs as go
+from flask import Flask
 
+server = Flask(__name__)
 
 class Visualization:
 
