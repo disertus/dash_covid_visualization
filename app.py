@@ -1,3 +1,5 @@
+# A very simple Flask Hello World app for you to get started with...
+
 import datetime
 
 import dash
@@ -31,7 +33,10 @@ class Visualization:
         dataframe.dead.iloc[-1] - dataframe.dead.iloc[-2],
         dataframe.dead.iloc[-2] - dataframe.dead.iloc[-3],
     )
-    tested_daily = dataframe.tested.iloc[-1] - dataframe.tested.iloc[-2]
+    tested_daily = (
+        dataframe.tested.iloc[-1] - dataframe.tested.iloc[-2],
+        dataframe.tested.iloc[-2] - dataframe.tested.iloc[-3],
+    )
 
     # print(((dataframe_reg.iloc[-1][1:] - dataframe_reg.iloc[-2][1:]) / dataframe_reg.iloc[-1][1:])*100)
 
@@ -116,6 +121,20 @@ class Visualization:
             {"title": {"text": "Number of Sick people (overall):"}}
         )
         return figure_sick_reg
+
+    def tested_people(self):
+        """Function visualizign the data about people tested """
+
+        data_tests = go.Scatter(
+            x=self.dataframe.date[10:],
+            y=self.dataframe.tested[10:],
+            text="Tested",
+            fill="tozeroy",
+            line=dict(color="#B785FF", width=3),
+        )
+        figure_tested = go.Figure(data=data_tests, layout=self.chart_layout())
+        figure_tested.update_layout({"title": {"text": "People Tested (overall):"}})
+        return figure_tested
 
 
 # Show graph with subplots
@@ -243,23 +262,26 @@ app.layout = html.Div(
                 ),
             ],
         ),
-        # html.Div(className='row',
-        #         children=[
-        #     html.Div(className='six columns div-for-charts',
-        #             children = [
-        #             dcc.Graph(
-        #                 id='covid19_cured_vs_dead',
-        #                 figure=viz.cured_vs_dead()
-        #             ),
-        #             html.Br(),
-        #             dcc.Graph(
-        #                 id='covid19_sick_overall',
-        #                 figure=viz.letality_rate()
-        #             )  # Define the right element
-        #             ]
-        #     ),
-        #     ]),
-        # ]),
+        html.Br(),
+        html.Div(
+            className="row",
+            children=[
+                html.Div(
+                    className="nine columns div-charts",
+                    children=[
+                        dcc.Graph(id="covid19_tested", figure=viz.tested_people(),),
+                    ],
+                ),
+                html.Div(
+                    className="three columns div-explainers",
+                    children=[
+                        html.H2(f"Total: {viz.dataframe.tested.iloc[-1]}"),
+                        html.H3(f"Today:  +{viz.tested_daily[0]}"),
+                        html.H3(f"Yesterday:  +{viz.tested_daily[1]}"),
+                    ],
+                ),
+            ],
+        ),
         html.Br(),
         html.H4(
             "Charts are updated on daily basis, data is being collected from the following sources :"
