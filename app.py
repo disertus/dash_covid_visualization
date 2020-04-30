@@ -1,5 +1,3 @@
-# A very simple Flask Hello World app for you to get started with...
-
 import datetime
 
 import dash
@@ -10,6 +8,7 @@ import plotly.graph_objs as go
 from flask import Flask
 
 server = Flask(__name__)
+
 
 class Visualization:
 
@@ -55,15 +54,15 @@ class Visualization:
     def cured_vs_dead(self):
         """Function visualizing the relation between the number of cured and dead people"""
         data_cured = go.Scatter(
-            x=self.dataframe.date[-21:],
-            y=self.dataframe.cured[-21:],
+            x=self.dataframe.date[10:],
+            y=self.dataframe.cured[10:],
             line=dict(color="#9EFF37", width=3),
             fill="tonexty",
             name="Cured",
         )
         data_dead = go.Scatter(
-            x=self.dataframe.date[-21:],
-            y=self.dataframe.dead[-21:],
+            x=self.dataframe.date[10:],
+            y=self.dataframe.dead[10:],
             line=dict(color="#DD0000", width=3),
             fill="tozeroy",
             name="Dead",
@@ -75,9 +74,10 @@ class Visualization:
     def letality_rate(self):
         """Function visualizing the letality rate: dead/(sick + cured)*100"""
         data_letality = go.Scatter(
-            x=self.dataframe.date,
+            x=self.dataframe.date[10:],
             y=(
-                self.dataframe.dead / (self.dataframe.sick + self.dataframe.cured)
+                self.dataframe.dead[10:]
+                / (self.dataframe.sick[10:] + self.dataframe.cured[10:])
             ).round(decimals=4)
             * 100,
             line=dict(color="#FF8700", width=3),
@@ -85,9 +85,10 @@ class Visualization:
             name="Fatality",
         )
         data_recovery = go.Scatter(
-            x=self.dataframe.date,
+            x=self.dataframe.date[10:],
             y=(
-                self.dataframe.cured / (self.dataframe.sick + self.dataframe.dead)
+                self.dataframe.cured[10:]
+                / (self.dataframe.sick[10:] + self.dataframe.dead[10:])
             ).round(decimals=4)
             * 100,
             line=dict(color="#057BF2", width=3),
@@ -143,7 +144,9 @@ app.layout = html.Div(
                         dcc.Graph(
                             id="covid19_id",
                             figure=viz.sick_people(
-                                viz.dataframe.date, viz.dataframe.sick, "Aggrnyl"
+                                viz.dataframe.date[10:],
+                                viz.dataframe.sick[10:],
+                                "Aggrnyl",
                             ),
                         ),
                     ],
