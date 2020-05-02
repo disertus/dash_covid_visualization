@@ -275,7 +275,7 @@ app.layout = html.Div(
                 html.Div(
                     className="three columns div-explainers",
                     children=[
-                        html.H2(f"Total: {viz.dataframe.tested.iloc[-1]}"),
+                        html.H2(f"Total tested: {viz.dataframe.tested.iloc[-1]}"),
                         html.H3(f"Today:  +{viz.tested_daily[0]}"),
                         html.H3(f"Yesterday:  +{viz.tested_daily[1]}"),
                         html.H3(
