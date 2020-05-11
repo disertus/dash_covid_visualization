@@ -1,4 +1,3 @@
-# A very simple Flask Hello World app for you to get started with...
 
 import datetime
 
@@ -76,9 +75,9 @@ class Visualization:
         figure.update_layout({"title": {"text": "Recovered vs Dead:"}})
         return figure
 
-    def letality_rate(self):
-        """Function visualizing the letality rate: dead/(sick + cured)*100"""
-        data_letality = go.Scatter(
+    def fatality_rate(self):
+        """Function visualizing the fatality rate: dead/(sick + cured)*100"""
+        data_fatality = go.Scatter(
             x=self.dataframe.date[10:],
             y=(
                 self.dataframe.dead[10:]
@@ -101,7 +100,7 @@ class Visualization:
             name="Recovery",
         )
         figure = go.Figure(
-            data=(data_recovery, data_letality), layout=self.chart_layout()
+            data=(data_recovery, data_fatality), layout=self.chart_layout()
         )
         figure.update_layout({"title": {"text": "Fatality vs Recovery rate (%):"}})
         return figure
@@ -123,7 +122,7 @@ class Visualization:
         return figure_sick_reg
 
     def tested_people(self):
-        """Function visualizign the data about people tested """
+        """Function visualizing the data about people tested """
 
         data_tests = go.Scatter(
             x=self.dataframe.date[10:],
@@ -244,7 +243,7 @@ app.layout = html.Div(
                     className="nine columns div-charts",
                     children=[
                         dcc.Graph(
-                            id="covid19_sick_overall", figure=viz.letality_rate()
+                            id="covid19_sick_overall", figure=viz.fatality_rate()
                         )  # Define the right element
                     ],
                 ),
