@@ -11,7 +11,7 @@ from flask import Flask
 server = Flask(__name__)
 
 
-class Visualization:
+class Visualizations:
 
     # Transfering data from the SQLite database into pandas dataframe
     dataframe = pd.read_csv("casualties.csv")
@@ -72,7 +72,7 @@ class Visualization:
             name="Dead",
         )
         figure = go.Figure(data=(data_cured, data_dead), layout=self.chart_layout())
-        figure.update_layout({"title": {"text": "Recovered vs Dead:"}})
+        figure.update_layout({"title": {"text": "Recovered vs Dead (overall):"}})
         return figure
 
     def fatality_rate(self):
