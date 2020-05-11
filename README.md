@@ -7,7 +7,8 @@ Covid scraper recording entries to the Google Cloud MySQL DB and visualizing dat
 ### Observations
 
 **"Recovery Plateaus" during weekends**
-While the infection and fatality rates are pretty consistent throught the whole period, the "Recovery" rate is regurarely entering "plateaus" during weekends (+/- 1 day). 
+
+While the infection and fatality rates are pretty consistent throught the whole period, the "Recovery" rate is regurarely stagnating during weekends (+/- 1 day). 
 
 This could be caused by:
 - more people addressing hospitals during weekends (increase in number of confirmed cases?)
