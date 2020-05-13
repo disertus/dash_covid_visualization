@@ -11,7 +11,7 @@ from flask import Flask
 server = Flask(__name__)
 
 
-class Visualizations:
+class Visualization:
 
     # Transfering data from the SQLite database into pandas dataframe
     dataframe = pd.read_csv("casualties.csv")
