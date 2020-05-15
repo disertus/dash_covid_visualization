@@ -79,22 +79,14 @@ class Visualization:
         """Function visualizing the fatality rate: dead/(sick + cured)*100"""
         data_fatality = go.Scatter(
             x=self.dataframe.date[10:],
-            y=(
-                self.dataframe.dead[10:]
-                / (self.dataframe.sick[10:] + self.dataframe.cured[10:])
-            ).round(decimals=4)
-            * 100,
+            y=(self.dataframe.dead[10:] / self.dataframe.sick[10:]).round(decimals=4) * 100,
             line=dict(color="#FF8700", width=3),
             fill="tozeroy",
             name="Fatality",
         )
         data_recovery = go.Scatter(
             x=self.dataframe.date[10:],
-            y=(
-                self.dataframe.cured[10:]
-                / (self.dataframe.sick[10:] + self.dataframe.dead[10:])
-            ).round(decimals=4)
-            * 100,
+            y=(self.dataframe.cured[10:] / self.dataframe.sick[10:]).round(decimals=4) * 100,
             line=dict(color="#057BF2", width=3),
             fill="tonexty",
             name="Recovery",
@@ -252,10 +244,10 @@ app.layout = html.Div(
                     children=[
                         html.H2("Current ratio"),
                         html.H3(
-                            f"Recovery: {(viz.dataframe.cured/(viz.dataframe.sick+viz.dataframe.dead)*100).round(decimals=2).iloc[-1]} %"
+                            f"Recovery: {(viz.dataframe.cured / viz.dataframe.sick * 100).round(decimals=2).iloc[-1]} %"
                         ),
                         html.H3(
-                            f"Fatality: {(viz.dataframe.dead/(viz.dataframe.sick+viz.dataframe.cured)*100).round(decimals=2).iloc[-1]} %"
+                            f"Fatality: {(viz.dataframe.dead / viz.dataframe.sick * 100).round(decimals=2).iloc[-1]} %"
                         ),
                     ],
                 ),
