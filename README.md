@@ -1,5 +1,5 @@
 # dash_covid_visualization
-Covid scraper recording entries to the Google Cloud MySQL DB and visualizing data with pandas and Dash (Plotly, Flask).
+App scraping the data from the Ministry of Healthcare and Cabinet of Ministers website, recording entries to the Google Cloud MySQL DB, transforming it into a Pandas Dataframe and visualizing it with Dash (Plotly, Flask).
 
 ![Covid 19 visualization](https://i.ibb.co/1ntkNJV/Screenshot-from-2020-06-19-10-33-56.png)
 
