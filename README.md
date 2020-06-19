@@ -1,6 +1,10 @@
 # dash_covid_visualization
 Covid scraper recording entries to the Google Cloud MySQL DB and visualizing data with pandas and Dash (Plotly, Flask).
 
+![Covid 19 visualization](https://i.ibb.co/1ntkNJV/Screenshot-from-2020-06-19-10-33-56.png)
+
+![Covid 19 visuzalization fatality ratio](https://i.ibb.co/0B0Sv3P/Screenshot-from-2020-06-19-10-36-21.png)
+
 ### Event log
 7/05/2020 - UA Gov Adopted a law on mass-testing
 
