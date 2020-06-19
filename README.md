@@ -9,6 +9,9 @@ While howering over the image, the exact stats and date for a given day are disp
 
 ![Covid 19 visuzalization fatality ratio](https://i.ibb.co/0B0Sv3P/Screenshot-from-2020-06-19-10-36-21.png)
 
+Feel free to try it at:
+https://covid19-in-ukraine-test.herokuapp.com/
+
 ### Event log
 7/05/2020 - UA Gov Adopted a law on mass-testing
 
