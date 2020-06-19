@@ -1,5 +1,5 @@
 # Covid19 Dashboard (cases in Ukraine)
-App scraping the data from the Ministry of Healthcare and Cabinet of Ministers website, recording entries to the Google Cloud MySQL DB, transforming it into a Pandas Dataframe, performing ratio calculations and visualizing the data with Dash (Plotly, Flask).
+The app scrapes the data from the Ministry of Healthcare and Cabinet of Ministers websites, records entries to the Google Cloud MySQL DB, transforms it into a Pandas Dataframe, performs ratio calculations and visualizes the data with Dash (Plotly, Flask).
 
 ![Covid 19 visualization](https://i.ibb.co/1ntkNJV/Screenshot-from-2020-06-19-10-33-56.png)
 
