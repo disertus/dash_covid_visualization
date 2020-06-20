@@ -1,5 +1,10 @@
 # Covid19 Dashboard (cases in Ukraine)
-The app scrapes the data from the Ministry of Healthcare and Cabinet of Ministers websites, records entries to the Google Cloud MySQL DB, transforms it into a Pandas Dataframe, performs ratio calculations and visualizes the data with Dash (Plotly, Flask).
+What this app does?: 
+*scrapes the data from the Ministry of Healthcare and Cabinet of Ministers websites (requests)
+*records entries to the Google Cloud MySQL DB (SQL)
+*transforms the data from the DB into a Pandas Dataframe
+*performs ratio calculations 
+*visualizes the data with Dash (Plotly, Flask).
 
 Feel free to try it out at: https://covid19-in-ukraine-test.herokuapp.com/
 
