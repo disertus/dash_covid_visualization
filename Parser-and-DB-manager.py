@@ -101,7 +101,7 @@ class People:
 class MysqlDatabase:
     # Establish connection with the database
     conn = mysql.connector.connect(
-        user="root", password="3a8n4m9qhhltp1r5", host="35.246.212.65", database="covid"
+        user="root", password="some password", host="some IP address", database="covid"
     )
     curs = conn.cursor()
 
