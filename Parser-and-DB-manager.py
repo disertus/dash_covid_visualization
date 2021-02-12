@@ -9,6 +9,7 @@ import requests
 from bs4 import BeautifulSoup, SoupStrainer
 
 start = time.time()
+
 # https://www.worldometers.info/coronavirus/ - table with cases worldwide
 # https://coronavirus.jhu.edu/map.html - visualization by John Hopkins
 
